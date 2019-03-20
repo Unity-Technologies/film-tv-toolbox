@@ -28,13 +28,6 @@ namespace UnityEditor.Formats.Alembic
         [MenuItem(MaterialRemapperLocalization.menuItemLabel)]
         public static void ShowWindow()
         {
-            instance.selection = Selection.GetTransforms(
-                SelectionMode.TopLevel | SelectionMode.OnlyUserModifiable);
-
-            Undo.RegisterCompleteObjectUndo(instance.selection, "Replace Materials in Selection");
-
-            instance.model.objectsToRemap = instance.selection.ToList();
-
             var thisWindow = GetWindow<MaterialRemapperView>(false, MaterialRemapperLocalization.windowLabel, true);
             thisWindow.ResetData();
         }
@@ -58,6 +51,13 @@ namespace UnityEditor.Formats.Alembic
             instance = this;
             if (model == null)
                 instance.model = CreateInstance<MaterialRemapperModel>();
+            
+            instance.selection = Selection.GetTransforms(
+                SelectionMode.TopLevel | SelectionMode.OnlyUserModifiable);
+
+            Undo.RegisterCompleteObjectUndo(instance.selection, "Replace Materials in Selection");
+
+            instance.model.objectsToRemap = instance.selection.ToList();
         }
         
         /// <summary>
