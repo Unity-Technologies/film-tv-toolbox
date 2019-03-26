@@ -1,7 +1,7 @@
 Shotgun CSV Import Export
 ==========================
 
-This is a simplififed example of how to create a timeline in Unity using a shot sequence from Shotgun.
+This is a simplified example of how to create a timeline in Unity using a shot sequence from Shotgun.
 
 How to use
 --------

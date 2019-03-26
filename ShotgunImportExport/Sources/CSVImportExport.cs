@@ -8,11 +8,11 @@ using UnityEngine.Playables;
 
 public static class CsvImportExport
 {
-    static readonly int k_FPS = 24;
-    static private readonly string k_directorObjectName = "Sample Shotgun CSV import";
-    static private readonly string k_fileName = "shot.csv";
-    static private readonly string k_pathToFile = Path.Combine("Assets", "CsvImportExport", "Editor");
-    static private readonly string k_timelineObjectName = "Sample Shotgun CSV timeline";
+    static const int k_FPS = 24;
+    static const string k_directorObjectName = "Sample Shotgun CSV import";
+    static const string k_fileName = "shot.csv";
+    static const string k_pathToFile = Path.Combine("Assets", "CsvImportExport", "Editor");
+    static const string k_timelineObjectName = "Sample Shotgun CSV timeline";
 
     private static Tuple<ActivationTrack, TimelineClip> CreateActivationTrackAndClip(TimelineAsset timeline, PlayableDirector director)
     {
@@ -29,6 +29,7 @@ public static class CsvImportExport
 
         //Create a Director object and a timeline
         UnityEngine.GameObject director_object = new UnityEngine.GameObject();
+        director_object.name = "CSV Imported Timeline";
         director = (PlayableDirector)director_object.AddComponent(typeof(PlayableDirector));
         director.name = k_directorObjectName;
         timeline = ScriptableObject.CreateInstance("TimelineAsset") as TimelineAsset;
@@ -37,10 +38,10 @@ public static class CsvImportExport
         
         foreach (var row in ReadCsvFile(Path.Combine(k_pathToFile, k_fileName)))
         {
-            var CsvField = CreateActivationTrackAndClip(timeline, director);
-            CsvField.Item1.name = row["Shot Code"];
-            CsvField.Item2.start =  (Convert.ToDouble(row["Cut In"]) / k_FPS);
-            CsvField.Item2.duration = ((Convert.ToDouble(row["Cut Out"]) - Convert.ToDouble(row["Cut In"])) / k_FPS);
+            var trackAndClip = CreateActivationTrackAndClip(timeline, director);
+            trackAndClip.Item1.name = row["Shot Code"];
+            trackAndClip.Item2.start =  (Convert.ToDouble(row["Cut In"]) / k_FPS);
+            trackAndClip.Item2.duration = ((Convert.ToDouble(row["Cut Out"]) - Convert.ToDouble(row["Cut In"])) / k_FPS);
         }
     }
 
