@@ -16,5 +16,4 @@ How to use
 ##Limitations
 * Having commas in fields (e.g.: `Opening sequence, part 2`) will confuse the parser
 * Having duplicate column names will cause errors due to duplicate keys
-* There is currently no other way than through the UI to change the framerate of the timeline. Unity's default is 60
 

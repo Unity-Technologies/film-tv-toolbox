@@ -8,18 +8,11 @@ using UnityEngine.Playables;
 
 public static class CsvImportExport
 {
-    static const int k_FPS = 24;
-    static const string k_directorObjectName = "Sample Shotgun CSV import";
-    static const string k_fileName = "shot.csv";
-    static const string k_pathToFile = Path.Combine("Assets", "CsvImportExport", "Editor");
-    static const string k_timelineObjectName = "Sample Shotgun CSV timeline";
-
-    private static Tuple<ActivationTrack, TimelineClip> CreateActivationTrackAndClip(TimelineAsset timeline, PlayableDirector director)
-    {
-            ActivationTrack track = timeline.CreateTrack<ActivationTrack>(null, "");
-            TimelineClip clip = track.CreateDefaultClip();
-            return new Tuple<ActivationTrack, TimelineClip>(track, clip);
-    }
+    const int k_FPS = 24;
+    const string k_directorObjectName = "Sample Shotgun CSV import";
+    const string k_fileName = "shot.csv";
+    static string k_pathToFile = Path.Combine("Assets", "CsvImportExport", "Editor");
+    const string k_timelineObjectName = "Sample Shotgun CSV timeline";
 
     [UnityEditor.MenuItem("Shotgun CSV/Import")]
     public static void ImportCsv ()
@@ -34,14 +27,16 @@ public static class CsvImportExport
         director.name = k_directorObjectName;
         timeline = ScriptableObject.CreateInstance("TimelineAsset") as TimelineAsset;
         timeline.name = k_timelineObjectName;
+        timeline.editorSettings.fps = k_FPS;
         director.playableAsset = timeline;
         
         foreach (var row in ReadCsvFile(Path.Combine(k_pathToFile, k_fileName)))
         {
-            var trackAndClip = CreateActivationTrackAndClip(timeline, director);
-            trackAndClip.Item1.name = row["Shot Code"];
-            trackAndClip.Item2.start =  (Convert.ToDouble(row["Cut In"]) / k_FPS);
-            trackAndClip.Item2.duration = ((Convert.ToDouble(row["Cut Out"]) - Convert.ToDouble(row["Cut In"])) / k_FPS);
+            ActivationTrack track = timeline.CreateTrack<ActivationTrack>(null, "");
+            TimelineClip clip = track.CreateDefaultClip();
+            track.name = row["Shot Code"];
+            clip.start =  (Convert.ToDouble(row["Cut In"]) / k_FPS);
+            clip.duration = ((Convert.ToDouble(row["Cut Out"]) - Convert.ToDouble(row["Cut In"])) / k_FPS);
         }
     }
 
@@ -59,14 +54,17 @@ public static class CsvImportExport
 
         foreach (var track in timelineAsset.GetOutputTracks())
         {
-            var dict = new Dictionary<string, string>();
+            
             var start = Convert.ToInt64(track.start * k_FPS);
             var end = Convert.ToInt64((track.duration + track.start) * k_FPS);
             var shotCode = track.name;
 
-            dict.Add("Shot Code", shotCode);
-            dict.Add("Cut In", start.ToString());
-            dict.Add("Cut Out", end.ToString());
+            var dict = new Dictionary<string, string>() 
+            {
+                {"Shot Code", shotCode },
+                {"Cut In", start.ToString() },
+                {"Cut Out", end.ToString() },
+            };
             toWrite.Add(dict);
         }
 
