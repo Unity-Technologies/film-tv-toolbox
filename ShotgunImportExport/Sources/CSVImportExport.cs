@@ -5,48 +5,44 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.Playables;
+using UnityEditor;
 
 public static class CsvImportExport
 {
     const int k_FPS = 24;
-    const string k_directorObjectName = "Sample Shotgun CSV import";
-    const string k_fileName = "shot.csv";
+    const string k_importFileName = "shot.csv";
+    const string k_exportFileName = "export_from_unity.csv";
+    const string k_timelineAssetName = "shotgun_imported_timeline.asset";
     static string k_pathToFile = Path.Combine("Assets", "CsvImportExport", "Editor");
     const string k_timelineObjectName = "Sample Shotgun CSV timeline";
 
-    [UnityEditor.MenuItem("Shotgun CSV/Import")]
+    [UnityEditor.MenuItem("Window/General/Film & TV toolbox/Shotgun/Import CSV")]
     public static void ImportCsv ()
     {
         TimelineAsset timeline;
-        PlayableDirector director;
 
-        //Create a Director object and a timeline
-        UnityEngine.GameObject director_object = new UnityEngine.GameObject();
-        director_object.name = "CSV Imported Timeline";
-        director = (PlayableDirector)director_object.AddComponent(typeof(PlayableDirector));
-        director.name = k_directorObjectName;
         timeline = ScriptableObject.CreateInstance("TimelineAsset") as TimelineAsset;
         timeline.name = k_timelineObjectName;
         timeline.editorSettings.fps = k_FPS;
-        director.playableAsset = timeline;
         
-        foreach (var row in ReadCsvFile(Path.Combine(k_pathToFile, k_fileName)))
+        foreach (var row in ReadCsvFile(Path.Combine(k_pathToFile, k_importFileName)))
         {
             ActivationTrack track = timeline.CreateTrack<ActivationTrack>(null, "");
             TimelineClip clip = track.CreateDefaultClip();
             track.name = row["Shot Code"];
             clip.start =  (Convert.ToDouble(row["Cut In"]) / k_FPS);
             clip.duration = ((Convert.ToDouble(row["Cut Out"]) - Convert.ToDouble(row["Cut In"])) / k_FPS);
+            AssetDatabase.CreateAsset(track, Path.Combine(k_pathToFile, String.Format("{0}.track.asset", track.name)));
         }
+        AssetDatabase.CreateAsset(timeline, Path.Combine(k_pathToFile, k_timelineAssetName ));
     }
 
-    [UnityEditor.MenuItem("Shotgun CSV/Export")]
+    [UnityEditor.MenuItem("Window/General/Film & TV toolbox/Shotgun/Export CSV")]
     public static void ExportCsv()
     {
-        GameObject director = GameObject.Find(k_directorObjectName);
 
         // Get the actual timeline object
-        var timelineAsset = (director.GetComponent("PlayableDirector") as PlayableDirector).playableAsset as TimelineAsset;
+        var timelineAsset = AssetDatabase.LoadAssetAtPath<TimelineAsset>(Path.Combine(k_pathToFile, k_timelineAssetName));
 
         // Each dictionary in the list represents a row in the CSV file
         // Each value in the row is addressable by its column name
@@ -68,7 +64,7 @@ public static class CsvImportExport
             toWrite.Add(dict);
         }
 
-        var pathToOutputFile = Path.Combine(k_pathToFile, "export_from_unity.csv");
+        var pathToOutputFile = Path.Combine(k_pathToFile, k_exportFileName);
         Debug.Log(pathToOutputFile);
         WriteCsv(toWrite, pathToOutputFile);
     }
