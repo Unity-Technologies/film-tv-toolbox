@@ -128,6 +128,7 @@ namespace UnityEditor.Formats.Alembic
 
                 if( matList.Count > 0)
                 {
+                    Undo.RegisterCompleteObjectUndo(sourceMesh.sharedMaterials.Cast<UnityEngine.Object>().ToArray(), "Assign Materials");
                     Debug.Log("Applying materials...");
                     sourceMesh.sharedMaterials = matList.ToArray();
                 }
