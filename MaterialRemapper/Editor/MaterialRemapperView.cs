@@ -226,7 +226,7 @@ namespace UnityEditor.Formats.Alembic
         static class MaterialRemapperLocalization
         {
             // UI Labels
-            public const string menuItemLabel = "Tools/Edit/Material Remapper";
+            public const string menuItemLabel = "Window/Film-TV toolbox/Material Remapper";
             public const string windowLabel = "Material Remapper";
             public const string meshSelectLabel = "Select Scene objects to remap";
             public const string meshRemapLabel = "Remap materials to object meshes";
