@@ -1,16 +1,17 @@
 Material Remapper
 =========================
-This tool is used to accelerate the material assignment for models containing a lot of meshes (Alembic, etc). This tool works with Legacy as well as SRP pipelines.
+Material Remapper allows to more easily assign material to models containing a lot of meshes (Alembic, etc).
+It works with Legacy as well as SRP pipelines.
 
 The tool was coded in large part by Mike Wutherick.
 
 How to Use
 ----------------------
-* Open the the Remapper Window: Window->Film-TV toolbox->Material Remapper
-* Select the root GameObject who's MeshRenderer you want to alter
-* Click on "Update Scene Selection". The window will contain the list of unique MeshRenderers: ![import settings](Documentation/WindowPopulated.png)
-* Add more materials to the session library by clicking "Add new Material Entry": each new entry is initialized to the default material for the current pipeline.
-* Replace the default materials with other materials created in the project.
+* Open the Material Remapper Window via Window->Film-TV toolbox->Material Remapper
+* Select the root GameObject containing the MeshRenderers you want to set-up
+* Click on "Update Scene Selection". This will load the list of unique MeshRenderers: ![import settings](Documentation/WindowPopulated.png)
+* Add more materials to the session library by clicking "Add new Material Entry". Each new entry is initialized to the default current pipeline material.
+* Replace the default materials with the wanted materials.
 * Chose material assignments from the popup (Multiple materials per MeshRenderer are supported). 
 * Once all assignments are configured, commit the changes to the Scene pressing "Apply Material Changes".
-* If at any moment you wish to return to the default state of the Material remapper, press ResetRemapper.
+* If at any moment you wish to return to the default state of the Material Remapper, press ResetRemapper.
