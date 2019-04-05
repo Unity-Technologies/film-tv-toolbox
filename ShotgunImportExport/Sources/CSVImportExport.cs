@@ -16,7 +16,7 @@ public static class CsvImportExport
     static string k_pathToFile = Path.Combine("Assets", "CsvImportExport", "Editor");
     const string k_timelineObjectName = "Sample Shotgun CSV timeline";
 
-    [UnityEditor.MenuItem("Window/General/Film & TV toolbox/Shotgun/Import CSV")]
+    [UnityEditor.MenuItem("Window/Film-TV toolbox/Shotgun/Import CSV")]
     public static void ImportCsv ()
     {
         TimelineAsset timeline;
@@ -37,7 +37,7 @@ public static class CsvImportExport
         AssetDatabase.CreateAsset(timeline, Path.Combine(k_pathToFile, k_timelineAssetName ));
     }
 
-    [UnityEditor.MenuItem("Window/General/Film & TV toolbox/Shotgun/Export CSV")]
+    [UnityEditor.MenuItem("Window/Film-TV toolbox/Shotgun/Export CSV")]
     public static void ExportCsv()
     {
 
