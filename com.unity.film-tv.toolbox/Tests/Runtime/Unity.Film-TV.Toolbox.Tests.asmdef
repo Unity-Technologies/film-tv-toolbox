@@ -1,7 +1,7 @@
 {
-    "name": "Unity.[SubGroup].[YourPackageName].Tests",
+    "name": "Unity.Film-TV.Toolbox.Tests",
     "references": [
-        "Unity.[SubGroup].[YourPackageName]"
+        "Unity.Film-TV.Toolbox"
     ],
     "optionalUnityReferences": [
         "TestAssemblies"

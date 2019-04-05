@@ -1,8 +1,8 @@
 {
-    "name": "Unity.[SubGroup].[YourPackageName].EditorTests",
+    "name": "Unity.Film-TV.Toolbox.EditorTests",
     "references": [
-        "Unity.[SubGroup].[YourPackageName].Editor",
-        "Unity.[SubGroup].[YourPackageName]"
+        "Unity.Film-TV.Toolbox.Editor",
+        "Unity.Film-TV.Toolbox"
     ],
     "optionalUnityReferences": [
         "TestAssemblies"
