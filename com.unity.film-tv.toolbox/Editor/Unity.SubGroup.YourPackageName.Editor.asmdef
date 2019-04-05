@@ -1,0 +1,10 @@
+{
+    "name": "Unity.[SubGroup].[YourPackageName].Editor",
+    "references": [
+      "Unity.[SubGroup].[YourPackageName]"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": []
+}
