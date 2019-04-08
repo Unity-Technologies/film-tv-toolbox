@@ -1,6 +1,6 @@
 {
 	"name": "com.unity.film-tv.toolbox",
-	"displayName":"Film-TV Toolbox",
+	"displayName":"Film and TV Toolbox",
 	"version": "0.1.0-preview.0",
 	"unity": "2018.3",
 	"description": "This package is a collection of experimental, proof of concept or helper tools for Film / TV productions.",
