@@ -24,15 +24,18 @@ public static class CsvImportExport
         timeline = ScriptableObject.CreateInstance("TimelineAsset") as TimelineAsset;
         timeline.name = k_timelineObjectName;
         timeline.editorSettings.fps = k_FPS;
+        ControlTrack track = timeline.CreateTrack<ControlTrack>(null, "");
         
         foreach (var row in ReadCsvFile(Path.Combine(k_pathToFile, k_importFileName)))
         {
-            ActivationTrack track = timeline.CreateTrack<ActivationTrack>(null, "");
-            TimelineClip clip = track.CreateDefaultClip();
-            track.name = row["Shot Code"];
+            TimelineClip clip = track.CreateClip<ControlPlayableAsset>();
+            ControlPlayableAsset clipAsset  = clip.asset as ControlPlayableAsset;
+
+            clipAsset.name = row["Shot Code"];
+            clip.displayName = row["Shot Code"];
             clip.start =  (Convert.ToDouble(row["Cut In"]) / k_FPS);
-            clip.duration = ((Convert.ToDouble(row["Cut Out"]) - Convert.ToDouble(row["Cut In"])) / k_FPS);
-            AssetDatabase.CreateAsset(track, Path.Combine(k_pathToFile, String.Format("{0}.track.asset", track.name)));
+            // In Unity, the last frame is exclusive. frames goes : [start; end[
+            clip.duration = ((Convert.ToDouble(row["Cut Out"]) - Convert.ToDouble(row["Cut In"]) + 1 ) / k_FPS);
         }
         AssetDatabase.CreateAsset(timeline, Path.Combine(k_pathToFile, k_timelineAssetName ));
     }
@@ -48,12 +51,16 @@ public static class CsvImportExport
         // Each value in the row is addressable by its column name
         var toWrite = new List<Dictionary<string, string>>();
 
-        foreach (var track in timelineAsset.GetOutputTracks())
+        TrackAsset track = timelineAsset.GetOutputTrack(0);
+        foreach (var clip in track.GetClips())
         {
+            var start = Convert.ToInt64(clip.start * k_FPS);
+            // In Shotgun, the last frame is inclusive. frames goes : [start; end]
+            // remove the "padding" we added
+            var end = Convert.ToInt64((clip.duration + clip.start) * k_FPS) - 1;
             
-            var start = Convert.ToInt64(track.start * k_FPS);
-            var end = Convert.ToInt64((track.duration + track.start) * k_FPS);
-            var shotCode = track.name;
+            ControlPlayableAsset clipAsset  = clip.asset as ControlPlayableAsset;
+            var shotCode = clipAsset.name;
 
             var dict = new Dictionary<string, string>() 
             {
