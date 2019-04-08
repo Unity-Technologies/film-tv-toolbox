@@ -1,8 +1,6 @@
 {
     "name": "Unity.Film-TV.Toolbox.Editor",
-    "references": [
-      "Unity.Film-TV.Toolbox"
-    ],
+    "references": [],
     "includePlatforms": [
         "Editor"
     ],
