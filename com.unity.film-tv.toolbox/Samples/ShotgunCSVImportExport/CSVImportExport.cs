@@ -25,7 +25,7 @@ public static class CsvImportExport
         timeline.name = k_timelineObjectName;
         timeline.editorSettings.fps = k_FPS;
         ControlTrack track = timeline.CreateTrack<ControlTrack>(null, "");
-        
+
         foreach (var row in ReadCsvFile(Path.Combine(k_pathToFile, k_importFileName)))
         {
             TimelineClip clip = track.CreateClip<ControlPlayableAsset>();
@@ -43,7 +43,6 @@ public static class CsvImportExport
     [UnityEditor.MenuItem("Window/Film-TV toolbox/Shotgun/Export CSV")]
     public static void ExportCsv()
     {
-
         // Get the actual timeline object
         var timelineAsset = AssetDatabase.LoadAssetAtPath<TimelineAsset>(Path.Combine(k_pathToFile, k_timelineAssetName));
 
@@ -58,11 +57,11 @@ public static class CsvImportExport
             // In Shotgun, the last frame is inclusive. frames goes : [start; end]
             // remove the "padding" we added
             var end = Convert.ToInt64((clip.duration + clip.start) * k_FPS) - 1;
-            
+
             ControlPlayableAsset clipAsset  = clip.asset as ControlPlayableAsset;
             var shotCode = clipAsset.name;
 
-            var dict = new Dictionary<string, string>() 
+            var dict = new Dictionary<string, string>()
             {
                 {"Shot Code", shotCode },
                 {"Cut In", start.ToString() },
@@ -85,7 +84,7 @@ public static class CsvImportExport
             var fieldNamesList = reader.ReadLine().Split(',');
             // Trim the double quotes
             fieldNamesList = fieldNamesList.Select(x => x.Replace("\"", "")).ToArray();
-            
+
             string line = reader.ReadLine();
 
             while (null != line)
