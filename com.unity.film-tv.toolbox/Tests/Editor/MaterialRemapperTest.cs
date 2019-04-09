@@ -8,12 +8,12 @@ class EditorExampleTest
 {
     MaterialRemapperModel m_Model;
 
-    [Test]
+    [Test, Description("Test GetMeshCount returns the created meshes count")]
     public void TestMeshListCount() {
         Assert.That(m_Model.GetMeshCount() == 3);
     }
 
-    [Test]
+    [Test, Description("Test GetUniqueMeshList returns a list which size corresponds to unique meshes count")]
     public void TestUniqueMeshListCount() {
         Assert.That(m_Model.GetUniqueMeshList().Count == 2);
     }
