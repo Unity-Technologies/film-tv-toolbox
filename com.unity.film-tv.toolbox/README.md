@@ -11,7 +11,13 @@ Prerequistes
 Content
 ----------------
 
+### Tools
+
 * Material Remapper : allows to more easily assign material to models containing a lot of meshes
+
+### Samples
+
+* Simple Shotgun CSV Import / Export : This shows how to create a timeline in Unity using a shot sequence from a Shotgun CSV export and export back modifications.
 
 Required dependencies
 ---------------

@@ -1,0 +1,8 @@
+{
+    "name": "Unity.Film-TV.Toolbox.Samples",
+    "references": [
+      "Unity.Film-TV.Toolbox.Editor"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}
