@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.Playables;
 using UnityEditor;
+using UnityEditor.FilmTV.Toolbox;
 
 public static class CsvImportExport
 {
@@ -13,10 +14,10 @@ public static class CsvImportExport
     const string k_importFileName = "shot.csv";
     const string k_exportFileName = "export_from_unity.csv";
     const string k_timelineAssetName = "shotgun_imported_timeline.asset";
-    static string k_pathToFile = Path.Combine("Assets", "CsvImportExport", "Editor");
+    static string k_pathToFile = PackageUtils.GetCallerRelativeToProjectFolderPath();
     const string k_timelineObjectName = "Sample Shotgun CSV timeline";
 
-    [UnityEditor.MenuItem("Window/Film-TV toolbox/Shotgun/Import CSV")]
+    [UnityEditor.MenuItem("Window/Film-TV toolbox/Samples/Shotgun/Import CSV")]
     public static void ImportCsv ()
     {
         TimelineAsset timeline;
@@ -40,7 +41,7 @@ public static class CsvImportExport
         AssetDatabase.CreateAsset(timeline, Path.Combine(k_pathToFile, k_timelineAssetName ));
     }
 
-    [UnityEditor.MenuItem("Window/Film-TV toolbox/Shotgun/Export CSV")]
+    [UnityEditor.MenuItem("Window/Film-TV toolbox/Samples/Shotgun/Export CSV")]
     public static void ExportCsv()
     {
         // Get the actual timeline object
