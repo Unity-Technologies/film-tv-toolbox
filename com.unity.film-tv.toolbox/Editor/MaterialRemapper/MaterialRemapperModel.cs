@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace UnityEditor.Formats.Alembic
+namespace UnityEditor.FilmTV.Toolbox
 { 
     [Serializable]
     public class MaterialRemapperModel :  ScriptableObject
