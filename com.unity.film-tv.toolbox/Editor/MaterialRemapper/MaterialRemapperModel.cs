@@ -84,7 +84,11 @@ namespace UnityEditor.Formats.Alembic
             var pipelineAsset = GraphicsSettings.renderPipelineAsset;
             if( pipelineAsset != null)
             {
+#if UNITY_2019_1_OR_NEWER
                 defaultMat = pipelineAsset.defaultMaterial;
+#else
+                defaultMat = pipelineAsset.GetDefaultMaterial();
+#endif
             }
             else
             {
