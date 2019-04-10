@@ -1,0 +1,9 @@
+{
+    "name": "Unity.Film-TV.Toolbox.Samples",
+    "references": [
+      "Unity.Film-TV.Toolbox.Editor",
+      "Unity.Timeline"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}

@@ -1,0 +1,13 @@
+{
+    "name": "Unity.Film-TV.Toolbox.EditorTests",
+    "references": [
+        "Unity.Film-TV.Toolbox.Editor"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": []
+}
