@@ -5,8 +5,8 @@ This repository is a collection of experimental, proof of concept or helper tool
 
 Prerequistes
 ---------------
-* >= 2018.3
-* Windows / OSX
+* This has been tested for `>= 2018.3`
+* Windows / OSX, not tested on Linux
 
 Content
 ----------------
