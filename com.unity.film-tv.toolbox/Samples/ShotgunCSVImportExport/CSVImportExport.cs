@@ -39,6 +39,9 @@ public static class CsvImportExport
             clip.duration = ((Convert.ToDouble(row["Cut Out"]) - Convert.ToDouble(row["Cut In"]) + 1 ) / k_FPS);
         }
         AssetDatabase.CreateAsset(timeline, Path.Combine(k_pathToFile, k_timelineAssetName ));
+
+        Debug.Log($"Loaded {k_ImportFileName} from {s_PathToFile}.");
+        Debug.Log($"Created Timeline Asset in {s_PathToFile}.");
     }
 
     [UnityEditor.MenuItem("Window/Film-TV toolbox/Samples/Shotgun/Export CSV")]
@@ -72,7 +75,7 @@ public static class CsvImportExport
         }
 
         var pathToOutputFile = Path.Combine(k_pathToFile, k_exportFileName);
-        Debug.Log(pathToOutputFile);
+        Debug.Log($"Exported clip updates in {pathToOutputFile}");
         WriteCsv(toWrite, pathToOutputFile);
     }
 
