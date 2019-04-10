@@ -1,10 +1,10 @@
 using UnityEngine;
 using NUnit.Framework;
 using System.Linq;
-using UnityEditor.Formats.Alembic;
+using UnityEditor.FilmTV.Toolbox;
 using UnityEditor.SceneManagement;
 
-class EditorExampleTest
+class MaterialRemapperTest
 {
     MaterialRemapperModel m_Model;
 
