@@ -9,15 +9,15 @@ Simply add an 'Alembic Material Mapper' component to the GameObject that has the
 
 1) Add Alembic Material Mapper
 
-![Add Alembic Material Mapper](Documentation~/images/AlembicMaterialMapper.jpg)
+![Add Alembic Material Mapper](images/AlembicMaterialMapper.jpg)
 
 2) Add Source Object reference
 
-![Add Source Object](Documentation~/images/AMM_Component.jpg)
+![Add Source Object](images/AMM_Component.jpg)
 
 3) 'Sync Materials' to apply the changes
 
-![Sync Materials](Documentation~/images/AMM_SyncMaterials.jpg)
+![Sync Materials](images/AMM_SyncMaterials.jpg)
 
 *Note: the mesh names in the FBX file MUST match those in the Alembic 1-1 for the mapping to work properly. The easiest way to do this is to publish an FBX file at the same time you publish your Alembic animation. The FBX can be managed in Unity to unpack and create the materials, and then applied to all of the alembic animations for that particular asset.*
 
