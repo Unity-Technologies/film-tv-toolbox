@@ -1,7 +1,6 @@
 {
     "name": "Unity.Film-TV.Toolbox",
     "references": [
-        "Unity.Formats.Alembic.Runtime"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
