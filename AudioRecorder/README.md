@@ -7,7 +7,9 @@ It only encodes WAV files and has no options except for the standard file output
 Hacked together by Jerome Maurey-Delaunay.   
 WAV Encoder provided by Dominique Leroux.
 
-[Unity package download.](bin/AudioRecorder.unitypackage)
+[Unity package download.](bin/AudioRecorder.unitypackage) 
+/!\ This unitypackage only works with old Asset Store Recorder.
+AudioRecorder is planed to be released as part of official Recorder in 2.0.1-preview.
 
 How to Use
 ----------------------
@@ -30,7 +32,3 @@ Good to know
 ![Default speaker mode](documentation/default_speaker_mode.png)
 
 * This does not encode based on an individual clip's channel count, but capturing the player's global output using the settings in the Audio Manager.
-
-Future
-----------------------
-This work will be properly integrated in Recorder at some point.
