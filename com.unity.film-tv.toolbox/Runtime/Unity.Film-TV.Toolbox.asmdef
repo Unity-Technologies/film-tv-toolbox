@@ -1,12 +1,9 @@
 {
-    "name": "Unity.Film-TV.Toolbox.Editor",
+    "name": "Unity.Film-TV.Toolbox",
     "references": [
-        "Unity.Film-TV.Toolbox"
     ],
     "optionalUnityReferences": [],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

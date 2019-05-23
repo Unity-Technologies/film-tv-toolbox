@@ -1,4 +1,8 @@
-
+upm-ci~/**
+.Editor/**
+.yamato/**
+*.zip*
+TestRunnerOptions.json
 upm-ci~/**
 .Editor/**
 .yamato/**

@@ -24,6 +24,14 @@ The tool was coded in large part by Mike Wutherick.
 * Once all assignments are configured, commit the changes to the Scene pressing "Apply Material Changes".
 * If at any moment you wish to return to the default state of the Material Remapper, press ResetRemapper.
 
+Alembic Material mapper
+----------------------
+One of the major downsides to using Alembic is the lack of material support in the format. In Unity, each alembic's materials must be managed independently in the scene that they alembic is being accessed, which makes iteration times very slow and painful.
+
+The Alembic Material Mapper component attempts to provide an easy solution for this problem, by using a target game object (an fbx for example) as the 'lookdev' material source for all materials.
+
+See [documentation](alembic-material-mapper.md).
+
 Samples
 ==========================
 
