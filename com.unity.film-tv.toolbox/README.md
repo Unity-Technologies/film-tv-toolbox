@@ -14,6 +14,7 @@ Content
 ### Tools
 
 * Material Remapper : allows to more easily assign material to models containing a lot of meshes
+* Alembic Material Mapper : allows to more easily assign materials to an Alembic object using a material source GameObject (ex: FBX)
 
 ### Samples
 
