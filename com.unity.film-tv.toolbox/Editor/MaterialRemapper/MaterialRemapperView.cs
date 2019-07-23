@@ -140,7 +140,6 @@ namespace UnityEditor.FilmTV.Toolbox
                                         var newMat = MaterialRemapperModel.GetDefaultMaterial();
                                         // add to our temp list of materials
                                         model.materialList.Add(newMat);
-                                        newMat.name = "MaterialRemap";
                                     }
                                     
                                 }
