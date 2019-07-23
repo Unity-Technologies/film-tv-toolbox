@@ -132,7 +132,7 @@ namespace UnityEditor.FilmTV.Toolbox
 
                 if( matList.Count > 0)
                 {
-                    Undo.RegisterCompleteObjectUndo(sourceMesh.sharedMaterials.Cast<UnityEngine.Object>().ToArray(), "Assign Materials");
+                    Undo.RegisterCompleteObjectUndo(sourceMesh.sharedMaterials.Cast<UnityEngine.Object>().Where(x=>x != null).ToArray(), "Assign Materials");
                     Debug.Log("Applying materials...");
                     sourceMesh.sharedMaterials = matList.ToArray();
                 }

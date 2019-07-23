@@ -148,7 +148,10 @@ namespace UnityEditor.FilmTV.Toolbox
 
                                 for (var i = 0; i < model.materialList.Count; i++)
                                 {
-                                    model.materialList[i] = (Material) EditorGUILayout.ObjectField(model.materialList[i].name,
+                                    var materialName = model.materialList[i] != null
+                                        ? model.materialList[i].name
+                                        : "None";
+                                    model.materialList[i] = (Material) EditorGUILayout.ObjectField(materialName,
                                         model.materialList[i], typeof(Material), true, GUILayout.MinWidth(400));
                                 }
                                 
@@ -187,7 +190,7 @@ namespace UnityEditor.FilmTV.Toolbox
                                             for (var j = 0; j < remapItem.mesh.sharedMaterials.Length; j++)
                                             {
                                                 // do we have any materials to remap
-                                                remapItem.selectedIndex[j] = EditorGUILayout.Popup(remapItem.selectedIndex[j], model.materialList.Select(x=>x.name).ToArray(), GUILayout.Width(200));
+                                                remapItem.selectedIndex[j] = EditorGUILayout.Popup(remapItem.selectedIndex[j], model.materialList.Select(x=>x !=null ? x.name : "None").ToArray(), GUILayout.Width(200));
                                             }
 
                                             EditorGUILayout.EndHorizontal();
