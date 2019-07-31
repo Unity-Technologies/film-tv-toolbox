@@ -150,10 +150,11 @@ namespace UnityEditor.FilmTV.Toolbox
                                     var materialName = model.materialList[i] != null
                                         ? model.materialList[i].name
                                         : "None";
-                                    model.materialList[i] = (Material) EditorGUILayout.ObjectField(materialName,
-                                        model.materialList[i], typeof(Material), true, GUILayout.MinWidth(400));
+                                    
+                                    model.materialList[i] = EditorGUILayout.ObjectField(materialName,
+                                        model.materialList[i], typeof(Material), true, GUILayout.MinWidth(400)) as Material;
                                 }
-                                
+
                             }
                             EditorGUILayout.EndVertical();
                         }
