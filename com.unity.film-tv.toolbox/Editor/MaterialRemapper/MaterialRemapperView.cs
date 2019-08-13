@@ -189,8 +189,10 @@ namespace UnityEditor.FilmTV.Toolbox
                                             // show all of the materials in the mesh
                                             for (var j = 0; j < remapItem.mesh.sharedMaterials.Length; j++)
                                             {
+                                                var options = model.materialList
+                                                    .Select(x => x != null ? x.name.Replace('#',' ') : "None").ToArray();
                                                 // do we have any materials to remap
-                                                remapItem.selectedIndex[j] = EditorGUILayout.Popup(remapItem.selectedIndex[j], model.materialList.Select(x=>x !=null ? x.name : "None").ToArray(), GUILayout.Width(200));
+                                                remapItem.selectedIndex[j] = EditorGUILayout.Popup(remapItem.selectedIndex[j], options, GUILayout.Width(200));
                                             }
 
                                             EditorGUILayout.EndHorizontal();
