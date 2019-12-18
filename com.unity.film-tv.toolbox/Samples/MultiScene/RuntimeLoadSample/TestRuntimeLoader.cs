@@ -44,12 +44,24 @@ namespace Unity.FilmTV.Toolbox.MultiScene.Samples
             {
                 Debug.Log("Loading scenes from config : " + thisConfig.name);
                 yield return new WaitForSeconds(1);
-                sceneConfig.LoadSceneConfig(thisConfig);
+                sceneConfig.LoadSceneConfig(thisConfig, true);
                 Debug.Log("Load  scenes from config : " + thisConfig.name + " - COMPLETE");
                 yield return new WaitForSeconds(2);
             }
 
-            Debug.Log("Load individual scene config - COMPLETE");
+            Debug.Log("Loading individual scene configs without unloading existing");
+
+            yield return new WaitForSeconds(1);
+            foreach (var thisConfig in sceneConfig.config)
+            {
+                Debug.Log("Loading scenes from config : " + thisConfig.name);
+                yield return new WaitForSeconds(1);
+                sceneConfig.LoadSceneConfig(thisConfig, false);
+                Debug.Log("Load  scenes from config : " + thisConfig.name + " - COMPLETE");
+                yield return new WaitForSeconds(2);
+            }
+            Debug.Log("Load individual scene config without unloading - COMPLETE");
+
             yield return new WaitForSeconds(1);
             Debug.Log("Test Runtime Scene loading - COMPLETE");
             yield return new WaitForSeconds(2);

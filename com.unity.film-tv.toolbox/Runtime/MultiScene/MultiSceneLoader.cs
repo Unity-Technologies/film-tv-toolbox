@@ -75,14 +75,15 @@ namespace Unity.FilmTV.Toolbox.MultiScene
 		/// <summary>
 		/// Load a specific scene config
 		/// </summary>
-		public void LoadSceneConfig( SceneConfig config)
+		public void LoadSceneConfig( SceneConfig config, bool unloadExisting)
 		{
+			
 			for( int i = 0; i < config.sceneList.Count; i++)
 			{
 				if (i == 0)
 				{
-					// load the first scene in single mode
-					LoadScene(config.sceneList[i], false);
+					// if we need to unload existing, then load the first in single mode, otherwise everything is additive
+					LoadScene(config.sceneList[i], !unloadExisting);
 				}
 				else
 				{
