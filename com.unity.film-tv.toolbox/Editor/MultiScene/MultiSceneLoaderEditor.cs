@@ -22,7 +22,7 @@ namespace Unity.FilmTV.Toolbox.MultiScene
             {
                 GUILayout.Label("Multi-Scene Config", EditorStyles.boldLabel);
 
-                GUILayout.Label("Allows you to define sets of scenes that can be loaded either as one 'set' or individually as desired. Useful for defining subsets of a project that different team members can work on independently.", EditorStyles.wordWrappedLabel);
+                GUILayout.Label("Allows you to define sets of scenes that can be loaded either as one 'set' or individually as desired. Useful for defining subsets of a project that different team members can work on independently.", EditorStyles.helpBox);
 
                 GUILayout.Space(15f);
 
@@ -100,18 +100,18 @@ namespace Unity.FilmTV.Toolbox.MultiScene
                 EditorGUILayout.Space();
                 if (GUILayout.Button("Load All Scenes", GUILayout.MinHeight(100), GUILayout.Height(50)))
                     sceneConfig.LoadAllScenes();
-                GUILayout.Label("Loads all Main Scenes and then all Set Scenes", EditorStyles.wordWrappedLabel);
+                GUILayout.Label("Loads all Main Scenes and then all Set Scenes", EditorStyles.helpBox);
 
                 EditorGUILayout.Space();
                 GUILayout.Label("Load Sub Config Scenes", EditorStyles.boldLabel);
-                GUILayout.Label("Load scenes defined in a specific config, from above.", EditorStyles.wordWrappedLabel);
+                GUILayout.Label("Load scenes defined in a specific config, from above.", EditorStyles.helpBox);
 
                 foreach (var entry in sceneConfig.config)
                 {
                     EditorGUILayout.Space();
                     if (GUILayout.Button("Load " + entry.name + " Scenes", GUILayout.MinHeight(100), GUILayout.Height(50)))
                         sceneConfig.LoadSceneConfig(entry, true);
-                    GUILayout.Label("Loads ONLY the scenes defined in " + entry.name + ".", EditorStyles.wordWrappedLabel);
+                    GUILayout.Label("Loads ONLY the scenes defined in " + entry.name + ".", EditorStyles.helpBox);
                 }
             }
             GUILayout.EndVertical();
