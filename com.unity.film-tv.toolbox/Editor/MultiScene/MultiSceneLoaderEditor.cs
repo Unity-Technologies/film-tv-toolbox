@@ -11,11 +11,20 @@ namespace Unity.FilmTV.Toolbox.MultiScene
     [CustomEditor(typeof(MultiSceneLoader))]
 	public class MultiSceneLoaderEditor : Editor
 	{
+        private MultiSceneLoader sceneConfig;
         public Dictionary<SceneConfig, bool> foldoutState = new Dictionary<SceneConfig, bool>();
+
+        public enum ListSort
+        {
+            MovetoTop,
+            MoveToBottom,
+            MoveUp,
+            MoveDown,
+        }
 
         public override void OnInspectorGUI()
 		{
-			var sceneConfig = (MultiSceneLoader)target;
+			sceneConfig = (MultiSceneLoader)target;
 
             EditorGUILayout.Space();
             GUILayout.BeginVertical();
@@ -71,17 +80,48 @@ namespace Unity.FilmTV.Toolbox.MultiScene
                                 {
                                     entry.sceneList.Add(new Object());
                                 }
+                                GUILayout.Space(15f);
+                                if (sceneConfig.config.Count > 1)
+                                {
+                                    GUILayout.Label("Move Config", EditorStyles.helpBox);
+                                    GUILayout.BeginHorizontal();
+                                    {
+                                        if (GUILayout.Button("Top"))
+                                        {
+                                            ReorderListEntry(entry, ListSort.MovetoTop);
+                                        }
+                                        if( GetConfigIndex(entry) != 0)
+                                        {
+                                            if (GUILayout.Button("Up"))
+                                            {
+                                                ReorderListEntry(entry, ListSort.MoveUp);
+                                            }
+                                        }
+                                        if (GetConfigIndex(entry) != sceneConfig.config.Count -1)
+                                        {
+                                            if (GUILayout.Button("Down"))
+                                            {
+                                                ReorderListEntry(entry, ListSort.MoveDown);
+                                            }
+                                        }
+                                        if (GUILayout.Button("Last"))
+                                        {
+                                            ReorderListEntry(entry, ListSort.MoveToBottom);
+                                        }
+                                    }
+                                    GUILayout.EndHorizontal();
+                                }
+                                if (GUILayout.Button("Remove Config"))
+                                {
+                                    sceneConfig.config.Remove(entry);
+                                    foldoutState.Remove(entry);
+                                }
+                                GUILayout.Space(15f);
+
                             }
                             GUILayout.EndVertical();
                         }
                         GUILayout.EndHorizontal();
-
-                        GUILayout.Space(15f);
-                        if( GUILayout.Button("Remove Config"))
-                        {
-                            sceneConfig.config.Remove(entry);
-                            foldoutState.Remove(entry);
-                        }
                     }
                 }
                 if( GUILayout.Button("Add new Config"))
@@ -116,5 +156,67 @@ namespace Unity.FilmTV.Toolbox.MultiScene
             }
             GUILayout.EndVertical();
 		}
+
+        public void ReorderListEntry( SceneConfig thisEntry, ListSort sort)
+        {
+            if (thisEntry == null)
+                return;
+
+            // get our current index
+            var index = GetConfigIndex(thisEntry);
+            // remove the old entry
+            sceneConfig.config.RemoveAt(index);
+            switch (sort)
+            {
+                case ListSort.MovetoTop:
+                    {
+                        // insert at the top
+                        sceneConfig.config.Insert(0, thisEntry);
+                        break;
+                    }
+                case ListSort.MoveToBottom:
+                    {
+                        // add it to the end
+                        sceneConfig.config.Add(thisEntry);
+                        break;
+                    }
+                case ListSort.MoveUp:
+                    {
+                        var newIndex = (index - 1);
+                        sceneConfig.config.Insert(newIndex, thisEntry);
+                        break;
+                    }
+                case ListSort.MoveDown:
+                    {
+                        var newIndex = (index + 1);
+                        sceneConfig.config.Insert(newIndex, thisEntry);
+                        break;
+                    }
+            }
+        }
+
+        public int GetConfigIndex( SceneConfig thisEntry)
+        {
+            var index = -1;
+            if (sceneConfig == null)
+                return index;
+
+            if (thisEntry == null)
+                return index;
+
+            if (!sceneConfig.config.Contains(thisEntry))
+                return index;
+            
+            for( var i = 0; i < sceneConfig.config.Count; i++)
+            {
+                if (sceneConfig.config[i] == thisEntry)
+                {
+                    index = i;
+                }
+            }
+
+            return index;
+
+        }
 	}
 }
