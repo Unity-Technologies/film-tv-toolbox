@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 using System.Collections.Generic;
 
 namespace Unity.FilmTV.Toolbox.MultiScene
@@ -11,6 +10,30 @@ namespace Unity.FilmTV.Toolbox.MultiScene
     [CustomEditor(typeof(MultiSceneLoader))]
 	public class MultiSceneLoaderEditor : Editor
 	{
+        public static class Loc
+        {
+            public const string WindowTitle = "Multi-Scene Config";
+            public const string TopDesc = "Allows you to define sets of scenes that can be loaded either as one 'set' or individually as desired. Useful for defining subsets of a project that different team members can work on independently.";
+            public const string ConfigList = "Config List";
+            public const string ConfigName = "Config name: ";
+            public const string SceneName = "Scene:";
+            public const string AddNewScene = "Add New Scene";
+            public const string MoveConfig = "Move Config";
+            public const string MoveTop = "Top";
+            public const string MoveUp = "Up";
+            public const string MoveDown = "Down";
+            public const string MoveBottom = "Last";
+            public const string RemoveConfig = "Remove Config";
+            public const string AddNewConfig = "Add new Config";
+            public const string NewConfigName = "New Config";
+            public const string LoadAllScenes = "Load All Scenes";
+            public const string LoadAllScenesDesc = "Loads all configs in the order they are defined";
+            public const string LoadSubScenes = "Load Sub Config Scenes";
+            public const string LoadSubScenesDesc = "Load scenes defined in a specific config, from above.";
+            public const string LoadOnlyScenes = "Loads ONLY the scenes defined in ";
+            public const string LoadXScenes = "Load {0} Scenes";
+        }
+
         private MultiSceneLoader sceneConfig;
         public Dictionary<SceneConfig, bool> foldoutState = new Dictionary<SceneConfig, bool>();
 
@@ -29,129 +52,139 @@ namespace Unity.FilmTV.Toolbox.MultiScene
             EditorGUILayout.Space();
             GUILayout.BeginVertical();
             {
-                GUILayout.Label("Multi-Scene Config", EditorStyles.boldLabel);
+                GUILayout.Label(Loc.WindowTitle, EditorStyles.boldLabel);
 
-                GUILayout.Label("Allows you to define sets of scenes that can be loaded either as one 'set' or individually as desired. Useful for defining subsets of a project that different team members can work on independently.", EditorStyles.helpBox);
+                GUILayout.Label(Loc.TopDesc, EditorStyles.helpBox);
 
                 GUILayout.Space(15f);
 
-                GUILayout.Label("Config List", EditorStyles.boldLabel);
-                for( var j = 0; j < sceneConfig.config.Count; j++)
+                GUILayout.Label(Loc.ConfigList, EditorStyles.boldLabel);
+                GUILayout.BeginHorizontal();
                 {
-                    var entry = sceneConfig.config[j];
-                    if ( foldoutState.ContainsKey( entry))
+                    GUILayout.Space(15f);
+                    GUILayout.BeginVertical();
                     {
-                        foldoutState[entry] = EditorGUILayout.Foldout(foldoutState[entry], entry.name);
-                    }
-                    else
-                    {
-                        foldoutState.Add(entry, false);
-                        foldoutState[entry] = EditorGUILayout.Foldout(foldoutState[entry], entry.name);
-                    }
-
-                    if( foldoutState[entry])
-                    {
-                        GUILayout.BeginHorizontal();
+                        // Render our config editors
+                        for (var j = 0; j < sceneConfig.config.Count; j++)
                         {
-                            GUILayout.Space(10f);
-                            GUILayout.BeginVertical();
+                            var entry = sceneConfig.config[j];
+                            if (foldoutState.ContainsKey(entry))
+                            {
+                                foldoutState[entry] = EditorGUILayout.Foldout(foldoutState[entry], entry.name);
+                            }
+                            else
+                            {
+                                foldoutState.Add(entry, false);
+                                foldoutState[entry] = EditorGUILayout.Foldout(foldoutState[entry], entry.name);
+                            }
+
+                            if (foldoutState[entry])
                             {
                                 GUILayout.BeginHorizontal();
                                 {
-                                    GUILayout.Label("Config name: ", GUILayout.Width(120f));
-                                    entry.name = GUILayout.TextField(entry.name);
+                                    GUILayout.Space(10f);
+                                    GUILayout.BeginVertical();
+                                    {
+                                        GUILayout.BeginHorizontal();
+                                        {
+                                            GUILayout.Label(Loc.ConfigName, GUILayout.Width(120f));
+                                            entry.name = GUILayout.TextField(entry.name);
+                                        }
+                                        GUILayout.EndHorizontal();
+                                        // scene list
+                                        for (var i = 0; i < entry.sceneList.Count; i++)
+                                        {
+                                            GUILayout.BeginHorizontal();
+                                            {
+                                                entry.sceneList[i] = EditorGUILayout.ObjectField(Loc.SceneName, entry.sceneList[i], typeof(Object), false);
+                                                if (GUILayout.Button("-", GUILayout.Width(35f)))
+                                                {
+                                                    entry.sceneList.Remove(entry.sceneList[i]);
+                                                }
+                                            }
+                                            GUILayout.EndHorizontal();
+                                        }
+
+                                        if (GUILayout.Button(Loc.AddNewScene))
+                                        {
+                                            entry.sceneList.Add(new Object());
+                                        }
+                                        GUILayout.Space(15f);
+                                        if (sceneConfig.config.Count > 1)
+                                        {
+                                            GUILayout.Label(Loc.MoveConfig, EditorStyles.helpBox);
+                                            GUILayout.BeginHorizontal();
+                                            {
+                                                if (GUILayout.Button(Loc.MoveTop))
+                                                {
+                                                    ReorderListEntry(entry, ListSort.MovetoTop);
+                                                }
+                                                if (GetConfigIndex(entry) != 0)
+                                                {
+                                                    if (GUILayout.Button(Loc.MoveUp))
+                                                    {
+                                                        ReorderListEntry(entry, ListSort.MoveUp);
+                                                    }
+                                                }
+                                                if (GetConfigIndex(entry) != sceneConfig.config.Count - 1)
+                                                {
+                                                    if (GUILayout.Button(Loc.MoveDown))
+                                                    {
+                                                        ReorderListEntry(entry, ListSort.MoveDown);
+                                                    }
+                                                }
+                                                if (GUILayout.Button(Loc.MoveBottom))
+                                                {
+                                                    ReorderListEntry(entry, ListSort.MoveToBottom);
+                                                }
+                                            }
+                                            GUILayout.EndHorizontal();
+                                        }
+                                        if (GUILayout.Button(Loc.RemoveConfig))
+                                        {
+                                            sceneConfig.config.Remove(entry);
+                                            foldoutState.Remove(entry);
+                                        }
+                                        GUILayout.Space(15f);
+
+                                    }
+                                    GUILayout.EndVertical();
                                 }
                                 GUILayout.EndHorizontal();
-                                // scene list
-                                for (var i = 0; i < entry.sceneList.Count; i++)
-                                {
-                                    GUILayout.BeginHorizontal();
-                                    {
-                                        entry.sceneList[i] = EditorGUILayout.ObjectField("Scene:", entry.sceneList[i], typeof(Object), false);
-                                        if (GUILayout.Button("-", GUILayout.Width(35f)))
-                                        {
-                                            entry.sceneList.Remove(entry.sceneList[i]);
-                                        }
-                                    }
-                                    GUILayout.EndHorizontal();
-                                }
-
-                                if (GUILayout.Button("Add New Scene"))
-                                {
-                                    entry.sceneList.Add(new Object());
-                                }
-                                GUILayout.Space(15f);
-                                if (sceneConfig.config.Count > 1)
-                                {
-                                    GUILayout.Label("Move Config", EditorStyles.helpBox);
-                                    GUILayout.BeginHorizontal();
-                                    {
-                                        if (GUILayout.Button("Top"))
-                                        {
-                                            ReorderListEntry(entry, ListSort.MovetoTop);
-                                        }
-                                        if( GetConfigIndex(entry) != 0)
-                                        {
-                                            if (GUILayout.Button("Up"))
-                                            {
-                                                ReorderListEntry(entry, ListSort.MoveUp);
-                                            }
-                                        }
-                                        if (GetConfigIndex(entry) != sceneConfig.config.Count -1)
-                                        {
-                                            if (GUILayout.Button("Down"))
-                                            {
-                                                ReorderListEntry(entry, ListSort.MoveDown);
-                                            }
-                                        }
-                                        if (GUILayout.Button("Last"))
-                                        {
-                                            ReorderListEntry(entry, ListSort.MoveToBottom);
-                                        }
-                                    }
-                                    GUILayout.EndHorizontal();
-                                }
-                                if (GUILayout.Button("Remove Config"))
-                                {
-                                    sceneConfig.config.Remove(entry);
-                                    foldoutState.Remove(entry);
-                                }
-                                GUILayout.Space(15f);
-
                             }
-                            GUILayout.EndVertical();
                         }
-                        GUILayout.EndHorizontal();
                     }
+                    GUILayout.EndVertical();
                 }
-                if( GUILayout.Button("Add new Config"))
+                GUILayout.EndHorizontal();
+                
+                if( GUILayout.Button(Loc.AddNewConfig))
                 {
                     var newConfig = new SceneConfig()
                     {
-                        name = "New Config"
+                        name = Loc.NewConfigName
                     };
                     sceneConfig.config.Add(newConfig);
                 }
-
-                //DrawDefaultInspector(); // TODO: make a proper inspector for the configs so I don't need to use the default inspector
-
+                
                 EditorGUILayout.Space();
-                GUILayout.Label("Load All Scenes", EditorStyles.boldLabel);
+                GUILayout.Label(Loc.LoadAllScenes, EditorStyles.boldLabel);
                 EditorGUILayout.Space();
-                if (GUILayout.Button("Load All Scenes", GUILayout.MinHeight(100), GUILayout.Height(50)))
+                if (GUILayout.Button(Loc.LoadAllScenes, GUILayout.MinHeight(100), GUILayout.Height(50)))
                     sceneConfig.LoadAllScenes();
-                GUILayout.Label("Loads all Main Scenes and then all Set Scenes", EditorStyles.helpBox);
+                GUILayout.Label(Loc.LoadAllScenesDesc, EditorStyles.helpBox);
 
                 EditorGUILayout.Space();
-                GUILayout.Label("Load Sub Config Scenes", EditorStyles.boldLabel);
-                GUILayout.Label("Load scenes defined in a specific config, from above.", EditorStyles.helpBox);
+                GUILayout.Label(Loc.LoadSubScenes, EditorStyles.boldLabel);
+                GUILayout.Label(Loc.LoadSubScenesDesc, EditorStyles.helpBox);
 
                 foreach (var entry in sceneConfig.config)
                 {
                     EditorGUILayout.Space();
-                    if (GUILayout.Button("Load " + entry.name + " Scenes", GUILayout.MinHeight(100), GUILayout.Height(50)))
+                    var buttonText = string.Format(Loc.LoadXScenes, entry.name);
+                    if (GUILayout.Button(buttonText, GUILayout.MinHeight(100), GUILayout.Height(50)))
                         sceneConfig.LoadSceneConfig(entry, true);
-                    GUILayout.Label("Loads ONLY the scenes defined in " + entry.name + ".", EditorStyles.helpBox);
+                    GUILayout.Label(Loc.LoadOnlyScenes + entry.name + ".", EditorStyles.helpBox);
                 }
             }
             GUILayout.EndVertical();
