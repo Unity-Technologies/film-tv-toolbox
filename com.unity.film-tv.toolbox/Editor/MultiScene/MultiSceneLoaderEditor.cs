@@ -47,6 +47,7 @@ namespace Unity.FilmTV.Toolbox.MultiScene
 
         public override void OnInspectorGUI()
 		{
+            serializedObject.Update();
 			sceneConfig = (MultiSceneLoader)target;
 
             EditorGUILayout.Space();
@@ -188,7 +189,12 @@ namespace Unity.FilmTV.Toolbox.MultiScene
                 }
             }
             GUILayout.EndVertical();
-		}
+            serializedObject.ApplyModifiedProperties();
+            if( GUI.changed)
+            {
+                EditorUtility.SetDirty(sceneConfig);
+            }
+        }
 
         public void ReorderListEntry( SceneConfig thisEntry, ListSort sort)
         {
