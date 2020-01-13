@@ -21,13 +21,15 @@ You can have any number of Multi-Scene Loaders in a project, and use them to loa
 This will create a new Multi-Scene Loader object in the project. 
 Select the new Multi Scene Loader to configure.
 
-[insert empty multi-scene config image]
+![Empty Multi-scene config](images/EmptyMultiSceneLoader.png)
 
 In the new Multi-Scene Loader there is a list of Configs. Add a new Config to begin.
 
 Each config defines a list of scenes to load.  
 
 Choose 'Add New Scene' to add an entry to the list of scenes, or click the [ - ] button to remove an existing scene from a config.
+
+![Populated Multi-scene config](images/Multi-SceneLoader.png)
 
 Some ways that we have used this in the past is to separate individual sets or locations from each other. 
 
