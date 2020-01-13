@@ -54,7 +54,11 @@ The first way to use the Multi-Scene loader is from the editor. Once you have cr
 
 # Runtime Use
 Multi-Scene Loader also provides a simple API that mirrors the UI buttons for loading the configurations.
-See the 'Samples' folder for an example of how to use.
+See the 'Samples' folder for an example of how to use. 
+
+Note: All scenes that are loaded at Runtime must be added to your project's Build Settings, same as normal. See this page in the manual for information:
+
+https://docs.unity3d.com/Manual/BuildSettings.html
 
 ## Runtime API
 
