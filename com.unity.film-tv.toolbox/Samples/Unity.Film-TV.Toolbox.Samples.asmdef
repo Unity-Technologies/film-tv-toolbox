@@ -1,9 +1,17 @@
 {
     "name": "Unity.Film-TV.Toolbox.Samples",
     "references": [
-      "Unity.Film-TV.Toolbox.Editor",
-      "Unity.Timeline"
+        "Unity.Film-TV.Toolbox.Editor",
+        "Unity.Film-TV.Toolbox",
+        "Unity.Timeline"
     ],
     "includePlatforms": [],
-    "excludePlatforms": []
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
