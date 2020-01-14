@@ -10,7 +10,10 @@ namespace Unity.FilmTV.Toolbox.MultiScene
     [CustomEditor(typeof(MultiSceneLoader))]
 	public class MultiSceneLoaderEditor : Editor
 	{
-        public static class Loc
+        /// <summary>
+        /// all of the localization for the UI
+        /// </summary>
+        private static class Loc
         {
             public const string WindowTitle = "Multi-Scene Config";
             public const string TopDesc = "Allows you to define sets of scenes that can be loaded either as one 'set' or individually as desired. Useful for defining subsets of a project that different team members can work on independently.";
@@ -34,10 +37,20 @@ namespace Unity.FilmTV.Toolbox.MultiScene
             public const string LoadXScenes = "Load {0} Scenes";
         }
 
+        /// <summary>
+        /// The scriptable object that we are editing
+        /// </summary>
         private MultiSceneLoader sceneConfig;
-        public Dictionary<SceneConfig, bool> foldoutState = new Dictionary<SceneConfig, bool>();
 
-        public enum ListSort
+        /// <summary>
+        /// State for the foldout / dropdowns in the list UI
+        /// </summary>
+        private Dictionary<SceneConfig, bool> foldoutState = new Dictionary<SceneConfig, bool>();
+
+        /// <summary>
+        /// used for sorting / moving the configs in the list
+        /// </summary>
+        private enum ListSort
         {
             MovetoTop,
             MoveToBottom,
@@ -45,6 +58,9 @@ namespace Unity.FilmTV.Toolbox.MultiScene
             MoveDown,
         }
 
+        /// <summary>
+        /// Draw our inspector
+        /// </summary>
         public override void OnInspectorGUI()
 		{
             serializedObject.Update();
@@ -198,7 +214,12 @@ namespace Unity.FilmTV.Toolbox.MultiScene
             }
         }
 
-        public void ReorderListEntry( SceneConfig thisEntry, ListSort sort)
+        /// <summary>
+        /// List sorting functionality
+        /// </summary>
+        /// <param name="thisEntry">the entry you want to sort</param>
+        /// <param name="sort">the sorting type</param>
+        private void ReorderListEntry( SceneConfig thisEntry, ListSort sort)
         {
             if (thisEntry == null)
                 return;
@@ -236,7 +257,12 @@ namespace Unity.FilmTV.Toolbox.MultiScene
             }
         }
 
-        public int GetConfigIndex( SceneConfig thisEntry)
+        /// <summary>
+        /// Retrieves the current index of the given config in our master list
+        /// </summary>
+        /// <param name="thisEntry">the entry that you are searching for</param>
+        /// <returns>the current index in the master multiscene config list</returns>
+        private int GetConfigIndex( SceneConfig thisEntry)
         {
             var index = -1;
             if (sceneConfig == null)
