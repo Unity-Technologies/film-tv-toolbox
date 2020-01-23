@@ -15,8 +15,14 @@ namespace Unity.FilmTV.Toolbox.MultiScene
 	[System.Serializable]
 	public class SceneConfig
 	{
+        /// <summary>
+        /// The name of this set of scenes
+        /// </summary>
 		[Header("Name")]
 		public string name = "Main Scenes";
+        /// <summary>
+        /// List of scenes that are in this set
+        /// </summary>
 		[SerializeField]
 		[Header("Scene List")]
 		public List<Object> sceneList = new List<Object>();
@@ -28,6 +34,9 @@ namespace Unity.FilmTV.Toolbox.MultiScene
     [CreateAssetMenu(fileName = "Multi-Scene Loader", menuName = "Scene Management/Multi-Scene Loader", order = 2)]
     public class MultiSceneLoader : ScriptableObject
     {
+        /// <summary>
+        /// The list of Configs that we can load
+        /// </summary>
 		[Header("Scene Config")]
 		public List<SceneConfig> config = new List<SceneConfig>();
 
@@ -72,10 +81,12 @@ namespace Unity.FilmTV.Toolbox.MultiScene
 			}
 		}
 
-		/// <summary>
-		/// Load a specific scene config
-		/// </summary>
-		public void LoadSceneConfig( SceneConfig config, bool unloadExisting)
+        /// <summary>
+        /// Load a specific scene config, optionally unloads existing first (ie can be optionally additively loaded)
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="unloadExisting"></param>
+        public void LoadSceneConfig( SceneConfig config, bool unloadExisting)
 		{
 			
 			for( int i = 0; i < config.sceneList.Count; i++)
@@ -93,6 +104,11 @@ namespace Unity.FilmTV.Toolbox.MultiScene
 			}
 		}
 
+        /// <summary>
+        /// Loads an individual scene, optionally done additively. This is a wrapper for SceneManager (runtime loading) and EditorSceneManager (edit-time loading) for scenes
+        /// </summary>
+        /// <param name="thisScene">the scene you would like to load</param>
+        /// <param name="isAdditive">whether you want to use additve loading or not</param>
 		private void LoadScene( Object thisScene, bool isAdditive)
 		{
 			if (thisScene == null)
