@@ -53,7 +53,7 @@ namespace UnityEditor.FilmTV.Toolbox
                 instance.model = CreateInstance<MaterialRemapperModel>();
             
             instance.selection = Selection.GetTransforms(
-                SelectionMode.TopLevel | SelectionMode.OnlyUserModifiable);
+                SelectionMode.TopLevel | SelectionMode.Editable);
 
             Undo.RegisterCompleteObjectUndo(instance.selection, "Replace Materials in Selection");
 
@@ -75,7 +75,7 @@ namespace UnityEditor.FilmTV.Toolbox
                     {
                         if (GUILayout.Button(MaterialRemapperLocalization.updateSceneSelection, GUILayout.Width(300), GUILayout.Height(35)))
                         {
-                            selection = Selection.GetTransforms(SelectionMode.TopLevel | SelectionMode.OnlyUserModifiable);
+                            selection = Selection.GetTransforms(SelectionMode.TopLevel | SelectionMode.Editable);
                             Debug.Log("Selection updated, found : " + selection.Length + " entries");
                             // reset the scene selection (doesn't reset the material list)
                             ResetSceneSelection();
