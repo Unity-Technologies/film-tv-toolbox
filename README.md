@@ -1,5 +1,1 @@
-Unity Film / TV toolbox
-=========================
-
-This repository is a collection of experimental, proof of concept or helper tools for Film / TV productions.
- 
+The tools in this repository are now available as part of the [Unity Cinematic Studio feature set](https://docs.unity3d.com/Manual/CinematicStudioFeature.html). This package is deprecated and no longer updated.
